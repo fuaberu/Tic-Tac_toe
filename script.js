@@ -128,7 +128,7 @@ document.querySelector('#lets-play-btn').addEventListener('click', (event) => {
     
 });
 
-
+//inicialize the game page
 document.querySelector('.form-input').addEventListener('submit', (event) => {
     event.preventDefault();
     if (document.getElementById('player1').value != '') {
