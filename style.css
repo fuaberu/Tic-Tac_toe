@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 * {
     margin: 0;
@@ -7,7 +7,7 @@
 body{
     font-family: 'Poppins', sans-serif;
     background-color: #E9E6E6;
-    color: #57AA5A;
+    color: #1a1d1a;
 }   
 .lets-play {
     position: absolute;
@@ -15,12 +15,14 @@ body{
     left: 0;
     right: 0;
     bottom: 0;  
-    background-color: #f4a261;
+    
     text-align: center;
     padding: 15vh;
 }
 h1 {
     font-size: 5rem;
+    font-weight: 700;
+    color: #57AA5A;
 }
 .container {
     border: 1px solid rgb(75, 74, 74);
@@ -33,10 +35,24 @@ h1 {
     bottom: 0;
     max-width: 50vw;
     margin: auto;
-    height: 80vh;
+    height: 87vh;
     text-align: left;
     background-color: #E9E6E6;
     text-align: center;
+}
+.flex {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+}
+.name-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+p {
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 .game-container {
     margin: 5vh auto 0 auto;
@@ -51,6 +67,9 @@ h1 {
     background-color: #192744;
     width: 100px;
     height: 100px;
+    padding: 0;
+    color: crimson;
+    font-size: 4rem;
 }
 .fade-in {
     opacity: 1;
@@ -61,12 +80,31 @@ h1 {
     opacity: 0;
 }
 button {
-    margin: auto;
+    text-decoration: none;
+    text-transform: uppercase;
     padding: 10px 18px;
-    color: #57AA5A;
+    font-weight: 500;
+    color: #E9E6E6;
     background-color: #285077;
     border-radius: 5px;
     margin-top: 5vh;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+button:hover {
+    background: #57AA5A;
+	letter-spacing: 1px;
+	-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+	-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+	box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+	transition: all 0.4s ease 0s;
+}
+.text-input {
+    height: 1.5rem;
+    width: 30ch;
+    border-radius: 5px;
+    border: 1px solid #285077;
 }
 footer {
     left: 1%;
@@ -77,4 +115,23 @@ footer {
     color: #F57F21;
     font-weight: bold;
     transition: all 0.2s;
+}
+@media only screen and (max-width: 925px) {
+    h1 {
+        font-size: 4rem;
+    }
+}
+@media only screen and (max-width: 635px) {
+    .container {
+        max-width: 100%;
+        border: none;
+    }
+    .flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .lets-play {
+        padding: 5vh;
+    }
 }

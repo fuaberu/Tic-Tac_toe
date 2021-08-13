@@ -11,10 +11,24 @@
 <body>
     <div class="lets-play">
         <h1>Tic Tac Toe</h1>
-        <button onclick="openGame()">Let's Play!</button>
+        <form class="form-input">
+            <button type="submit" id="lets-play-btn">Let's Play!</button>
+            <div class="flex">
+                <div class="name-div">
+                    <label for="player1">Player 1 name</label>
+                    <input type="text" class="text-input" name="player1" id="player1">
+                </div>
+                <div class="name-div">
+                    <label for="player2">Player 2 name</label>
+                    <input type="text" class="text-input" name="player2" id="player2">
+                </div>
+
+            </div>
+        </form>
     </div>
     <div class="container fade-out">
         <h1>Tic Tac Toe</h1>
+        <p id="status"></p>
         <div class="game-container">
             <div data-cell-index='0' class="cell"></div>
             <div data-cell-index='1' class="cell"></div>

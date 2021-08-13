@@ -1,12 +1,17 @@
+//variables
 let player1board = [];
 let player2board = [];
+
+let player1Name = '';
+let player2Name = '';
 
 let playerIcon = 'x';
 let gameOn = true;
 
+//game module
 const gameboard = (() => {
     //get data
-    const getClicked = (cell,player) => {
+    const getData = (cell,player) => {
         if(cell.innerText == '' && player == 'x') {
             let attribute = cell.getAttribute('data-cell-index');
             player1board.push(parseFloat(attribute)); 
@@ -21,15 +26,19 @@ const gameboard = (() => {
             cell.innerText = playerIcon;
         }
     }
-    //reset Ui
-    const resetUi = () => {
+    //player turn
+    const playerTurn = (player) => {
+        document.getElementById('status').innerText = `It's player ${player} turn`;
+    }
+    //reset game
+    const resetGame = () => {
         document.querySelectorAll(".cell").forEach(cell => cell.innerText = '');
         player2board = [];
         player1board = [];
-        console.log(player1board)
+        gameOn = true;
     }
     //check winner
-    const checkWinner = () => {
+    const checkWinner = (p1Name,p2Name) => {
         const winnerChances = [
             [0,1,2],
             [0,3,6],
@@ -45,7 +54,7 @@ const gameboard = (() => {
             if (player2board.indexOf(winnerChances[i][0]) >= 0 
             && player2board.indexOf(winnerChances[i][1]) >= 0 
             && player2board.indexOf(winnerChances[i][2]) >= 0) {
-                console.log('o wins')
+                document.getElementById('status').innerText = `Player ${p2Name} wins`;
                 gameOn = false;
                 return
             } 
@@ -55,21 +64,30 @@ const gameboard = (() => {
             if (player1board.indexOf(winnerChances[i][0]) >= 0 
             && player1board.indexOf(winnerChances[i][1]) >= 0 
             && player1board.indexOf(winnerChances[i][2]) >= 0) {
-                console.log('x wins')
+                document.getElementById('status').innerText = `Player ${p1Name} wins`;
                 gameOn = false;
                 return
             } 
         }
         //check if its a draw
         if (player2board.length == 5 || player1board.length == 5) {
-            console.log('its a draw')
-        }
+            document.getElementById('status').innerText = `It's a tie`;
+            gameOn = false;
+        }    
+    }
+    //start the game pressing the button
+    const openGame = () => {
+        document.querySelector('.container').classList.remove("fade-out");
+        document.querySelector('.container').classList.add("fade-in");
+        document.querySelector('.lets-play').classList.add("fade-out");
     }
     return {
         showClicked,
-        getClicked,
+        getData,
         checkWinner,
-        resetUi,
+        resetGame,
+        playerTurn,
+        openGame
     }
 })();
 
@@ -77,27 +95,52 @@ const gameboard = (() => {
 document.querySelectorAll(".cell").forEach( cell => {
     cell.addEventListener('click', () =>{
         if (gameOn === true) {
-            console.log(gameOn)
-            gameboard.getClicked(cell,playerIcon);
+            gameboard.getData(cell,playerIcon);
             gameboard.showClicked(cell);
-            gameboard.checkWinner();
-            console.log(player1board, player2board);
-            if (playerIcon == 'o') {
+            gameboard.checkWinner(player1Name,player2Name);
+            if (playerIcon == 'o' && gameOn == true) {
                 playerIcon = 'x';
-            } else {
+                gameboard.playerTurn(player1Name);
+            } else if (playerIcon == 'x' && gameOn == true) {
                 playerIcon = 'o';
+                gameboard.playerTurn(player2Name);
             }
     }
     })
 }) 
+
 //get reset button 
 document.getElementById('reset').addEventListener('click', () => {
-    gameboard.resetUi();
+    gameboard.resetGame();
+    if (playerIcon == 'o') {
+        playerIcon = 'x';
+        gameboard.playerTurn(player1Name);
+    } else if (playerIcon == 'x') {
+        gameboard.playerTurn(player1Name);
+    }
+    
 }); 
 
-//start the game pressing the button
-function openGame() {
-    document.querySelector('.container').classList.remove("fade-out");
-    document.querySelector('.container').classList.add("fade-in");
-    document.querySelector('.lets-play').classList.add("fade-out");
-}
+//call the game openinig
+document.querySelector('#lets-play-btn').addEventListener('click', (event) => {
+    
+    gameboard.openGame();
+    
+});
+
+
+document.querySelector('.form-input').addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (document.getElementById('player1').value != '') {
+        player1Name = document.getElementById('player1').value;
+    } else {
+        player1Name = 1;
+    }
+    if (document.getElementById('player2').value != '') {
+        player2Name = document.getElementById('player2').value;
+    } else {
+        player2Name = 2;
+    }
+    //show player 1 name at the status
+    gameboard.playerTurn(player1Name)
+}); 
